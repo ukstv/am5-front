@@ -4,6 +4,7 @@ import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import { useEffect, useState } from "react";
 import { useAccount } from "../lib/fancy/use-account";
+import Link from "next/link";
 
 const Home: NextPage = () => {
   const account = useAccount();
@@ -13,15 +14,15 @@ const Home: NextPage = () => {
         <div className={"flex top-menu-menu"}>
           <div className={"font-bold"}>am5</div>
           <div className={"flex ml-4"}>
-            <a className={"top-menu-menu-item"} href={"#"}>
-              Favourites
-            </a>
-            <a className={"top-menu-menu-item"} href={"#"}>
-              Users
-            </a>
-            <a className={"top-menu-menu-item"} href={"#"}>
-              Policies
-            </a>
+            <Link href={"/favourites"} passHref={true}>
+              <a className={"top-menu-menu-item"}>Favourites</a>
+            </Link>
+            <Link href={"/users"} passHref={true}>
+              <a className={"top-menu-menu-item"}>Users</a>
+            </Link>
+            <Link href={"/policies"} passHref={true}>
+              <a className={"top-menu-menu-item"}>Policies</a>
+            </Link>
           </div>
         </div>
         <div>

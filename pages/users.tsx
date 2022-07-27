@@ -1,7 +1,8 @@
 import { NextPage } from "next";
+import { Container } from "../lib/components/container";
 
 const UsersPage: NextPage = () => {
-  return <div>Users List</div>;
+  return <Container>Users List</Container>;
 };
 
 export default UsersPage;

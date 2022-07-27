@@ -1,16 +1,16 @@
-html,
-body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.top-menu {
+    line-height: 3em;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+.top-menu-menu .top-menu-menu-item{
+    @apply rounded px-4;
 }
 
-* {
-  box-sizing: border-box;
+.top-menu-menu .top-menu-menu-item:hover{
+    @apply rounded bg-sky-500;
+    color: white;
 }

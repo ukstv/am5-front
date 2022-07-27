@@ -26,7 +26,7 @@ export function Container(props: React.PropsWithChildren<{}>) {
     <div className={"container mx-auto"}>
       <div className={"flex justify-between top-menu mt-4"}>
         <div className={"flex top-menu-menu"}>
-          <div className={"font-bold italic"}>am5</div>
+          <div className={"font-bold italic"}>IAM</div>
           <div className={"flex ml-4"}>
             <ActiveLink href={"/favourites"}>Favourites</ActiveLink>
             <ActiveLink href={"/users"}>Users</ActiveLink>

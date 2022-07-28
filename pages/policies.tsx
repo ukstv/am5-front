@@ -6,6 +6,7 @@ import { Ed25519Provider } from "key-did-provider-ed25519";
 import { DIDSession } from "did-session";
 import * as cacao from "ceramic-cacao";
 import { signMessage } from "@wagmi/core";
+import * as uint8arrays from 'uint8arrays'
 import { useEffect, useState } from "react";
 import {
   BehaviorSubject,
@@ -14,8 +15,9 @@ import {
   Subject,
   tap,
 } from "rxjs";
+import { CacaoBlock } from "ceramic-cacao";
 
-const f = new Subject();
+const f = new Subject<string>();
 function useSigner() {
   const s = useSignMessage();
 
@@ -30,7 +32,7 @@ function useSigner() {
     }
   }, [s.data, s.error]);
 
-  return (message: string) => {
+  return (message: string): Promise<string> => {
     s.signMessage({ message: message });
     return firstValueFrom(f);
   };
@@ -45,8 +47,23 @@ const PoliciesPage: NextPage = () => {
   const handleAddPolicy = async () => {
     const address = account.address;
     if (!address) return;
-    const hex = await s("hello" + new Date().toISOString());
-    console.log("f", hex);
+    const siwe = new cacao.SiweMessage({
+      domain: "iam.example",
+      address: address,
+      uri: "did:pkh:foo",
+      chainId: "1",
+      version: "1",
+      issuedAt: new Date().toISOString().replace(/\..+/, "Z"),
+      resources: ["http://roadmap.ceramic.network/roadmap"],
+    });
+    const signature = await s(siwe.signMessage());
+    const signed = new cacao.SiweMessage(
+      Object.assign({}, siwe, { signature })
+    );
+    const cacaoInstance = cacao.Cacao.fromSiweMessage(signed);
+    const block = await cacao.CacaoBlock.fromCacao(cacaoInstance);
+    console.log("block", block);
+    console.log('base64', uint8arrays.toString(block.bytes, 'base64'))
     // f.subscribe((d) => {
     //   console.log("d.1", new Date(), d);
     // });

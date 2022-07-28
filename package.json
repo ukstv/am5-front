@@ -13,6 +13,7 @@
     "@ceramicnetwork/blockchain-utils-linking": "^2.0.7",
     "@composedb/client": "^0.1.1",
     "@composedb/types": "^0.1.0",
+    "@ipld/dag-cbor": "^7.0.2",
     "@rainbow-me/rainbowkit": "^0.4.4",
     "@wagmi/core": "^0.5.0",
     "autoprefixer": "^10.4.7",

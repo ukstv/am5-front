@@ -2,42 +2,58 @@ lockfileVersion: 5.4
 
 specifiers:
   '@apollo/client': ^3.6.9
+  '@ceramicnetwork/3id-did-resolver': ^2.1.3
   '@ceramicnetwork/blockchain-utils-linking': ^2.0.7
+  '@ceramicnetwork/http-client': ^2.3.0
   '@composedb/client': ^0.1.1
   '@composedb/types': ^0.1.0
   '@rainbow-me/rainbowkit': ^0.4.4
   '@types/node': ^17.0.35
   '@types/react': ^18.0.9
   autoprefixer: ^10.4.7
+  did-resolver: ^3.2.2
   did-session: ^0.1.1
+  dids: ^3.2.0
   eslint: ^8.15.0
   eslint-config-next: ^12.1.6
   ethers: ^5.0.0
   jotai: ^1.7.6
+  key-did-provider-ed25519: ^2.0.1
+  key-did-resolver: ^2.0.5
   next: ^12.1.6
+  pkh-did-resolver: ^1.0.5
   postcss: ^8.4.14
   prettier: ^2.7.1
   react: ^18.1.0
   react-dom: ^18.1.0
   tailwindcss: ^3.1.6
   typescript: ^4.7.2
+  uint8arrays: ^3.0.0
   wagmi: ^0.5.3
 
 dependencies:
   '@apollo/client': 3.6.9_react@18.2.0
+  '@ceramicnetwork/3id-did-resolver': 2.1.3
   '@ceramicnetwork/blockchain-utils-linking': 2.0.7
+  '@ceramicnetwork/http-client': 2.3.0
   '@composedb/client': 0.1.1
   '@composedb/types': 0.1.0
   '@rainbow-me/rainbowkit': 0.4.4_v7nnu6dra2tbybqyt3gkgm7c5a
   autoprefixer: 10.4.7_postcss@8.4.14
+  did-resolver: 3.2.2
   did-session: 0.1.1
+  dids: 3.2.0
   ethers: 5.6.9
   jotai: 1.7.6_react@18.2.0
+  key-did-provider-ed25519: 2.0.1
+  key-did-resolver: 2.0.5
   next: 12.2.3_biqbaboplfbrettd7655fr4n2y
+  pkh-did-resolver: 1.0.5
   postcss: 8.4.14
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
   tailwindcss: 3.1.6
+  uint8arrays: 3.0.0
   wagmi: 0.5.12_um4cugg2i3ywhvigsmvsir7hgy
 
 devDependencies:
@@ -170,6 +186,21 @@ packages:
     dependencies:
       '@babel/helper-validator-identifier': 7.18.6
       to-fast-properties: 2.0.0
+    dev: false
+
+  /@ceramicnetwork/3id-did-resolver/2.1.3:
+    resolution: {integrity: sha512-TJhh9Wi2Jt1Kl2u1ea4hR9NtsLI1L428dF1sAj6PbVr9A8CXRgaw2LD5lai+GwryuPzjmyLHYuYVNrpqipJDpw==}
+    dependencies:
+      '@ceramicnetwork/common': 2.3.0
+      '@ceramicnetwork/stream-tile': 2.3.0
+      '@ceramicnetwork/streamid': 2.2.0
+      cross-fetch: 3.1.5
+      lru_map: 0.4.1
+      multiformats: 9.7.1
+      uint8arrays: 3.0.0
+    transitivePeerDependencies:
+      - '@opentelemetry/api'
+      - encoding
     dev: false
 
   /@ceramicnetwork/blockchain-utils-linking/2.0.7:
@@ -2853,7 +2884,6 @@ packages:
 
   /fast-json-stable-stringify/2.1.0:
     resolution: {integrity: sha512-lhd/wF+Lk98HZoTCtlVraHtfh5XYijIjalXck7saUtuanSDyLMxnHhSXEDJqHxD7msR8D0uCmqlkwjCV8xvwHw==}
-    dev: true
 
   /fast-levenshtein/2.0.6:
     resolution: {integrity: sha512-DCXu6Ifhqcks7TZKY3Hxp3y6qphY5SJZmrWMDrKcERSOXWQdMhU9Ig/PYrzyw/ul9jOIyh0N4M0tbC5hodg8dw==}
@@ -3465,6 +3495,26 @@ packages:
       readable-stream: 3.6.0
     dev: false
 
+  /key-did-provider-ed25519/2.0.1:
+    resolution: {integrity: sha512-FaB2g7zUAeN/bLaFl2YSNQx9NsxgDd/3TR1YGvoXLhENsvZBdyA2V7hX8/MZhZ5jm82wL5lRw3O4UXuz/pJANQ==}
+    engines: {node: '>=14.14'}
+    dependencies:
+      '@stablelib/ed25519': 1.0.2
+      did-jwt: 6.2.1
+      fast-json-stable-stringify: 2.1.0
+      rpc-utils: 0.6.2
+      uint8arrays: 3.0.0
+    dev: false
+
+  /key-did-resolver/2.0.5:
+    resolution: {integrity: sha512-4WPGWjkg4nabR6v1mKepZAhry4UM4vqsq91PjLU3pUjIX3KppkqndrNW3uJhC669tbaRF2zbaLtTpEYJhVERSw==}
+    dependencies:
+      '@stablelib/ed25519': 1.0.2
+      multiformats: 9.7.1
+      uint8arrays: 3.0.0
+      varint: 6.0.0
+    dev: false
+
   /keyvaluestorage-interface/1.0.0:
     resolution: {integrity: sha512-8t6Q3TclQ4uZynJY9IGr2+SsIGwK9JHcO6ootkHCGA0CrQCRy+VkouYNO2xicET6b9al7QKzpebNow+gkpCL8g==}
     dev: false
@@ -3546,6 +3596,10 @@ packages:
     dependencies:
       yallist: 4.0.0
     dev: true
+
+  /lru_map/0.4.1:
+    resolution: {integrity: sha512-I+lBvqMMFfqaV8CJCISjI3wbjmwVu/VyOoU7+qtu9d7ioW5klMgsTTiUOUp+DJvfTTzKXoPbyC6YfgkNcyPSOg==}
+    dev: false
 
   /match-sorter/6.3.1:
     resolution: {integrity: sha512-mxybbo3pPNuA+ZuCUhm5bwNkXrJTbsk5VWbR5wiwz/GC6LIiegBGn2w3O08UG/jdbYLinw51fSQ5xNU1U3MgBw==}
@@ -3951,6 +4005,12 @@ packages:
   /pify/5.0.0:
     resolution: {integrity: sha512-eW/gHNMlxdSP6dmG6uJip6FXN0EQBwm2clYYd8Wul42Cwu/DK8HEftzsapcNdYe2MfLiIwZqsDk2RDEsTE79hA==}
     engines: {node: '>=10'}
+    dev: false
+
+  /pkh-did-resolver/1.0.5:
+    resolution: {integrity: sha512-oEoVR9+uO8Lzi74q2slHDaJSakOxDedFjsuK63eqPRSYEVCIYJxc5360/gYs7UdPgnzcwcoI4PxviOBYCQnsGw==}
+    dependencies:
+      caip: 1.1.0
     dev: false
 
   /pngjs/3.4.0:

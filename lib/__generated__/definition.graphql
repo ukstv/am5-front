@@ -1,0 +1,344 @@
+type Query {
+  """Fetches an object given its ID"""
+  node(
+    """The ID of an object"""
+    id: ID!
+  ): Node
+  viewer: CeramicAccount
+  accountIndex(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String
+
+    """Returns the first n items from the list."""
+    first: Int
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String
+
+    """Returns the last n items from the list."""
+    last: Int
+  ): AccountConnection
+  accountAccessIndex(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String
+
+    """Returns the first n items from the list."""
+    first: Int
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String
+
+    """Returns the last n items from the list."""
+    last: Int
+  ): AccountAccessConnection
+  policyIndex(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String
+
+    """Returns the first n items from the list."""
+    first: Int
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String
+
+    """Returns the last n items from the list."""
+    last: Int
+  ): PolicyConnection
+}
+
+"""An object with an ID"""
+interface Node {
+  """The id of the object."""
+  id: ID!
+}
+
+type CeramicAccount implements Node {
+  id: ID!
+  isViewer: Boolean!
+  account: Account
+  accountAccessList(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String
+
+    """Returns the first n items from the list."""
+    first: Int
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String
+
+    """Returns the last n items from the list."""
+    last: Int
+  ): AccountAccessConnection
+  policyList(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String
+
+    """Returns the first n items from the list."""
+    first: Int
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String
+
+    """Returns the last n items from the list."""
+    last: Int
+  ): PolicyConnection
+}
+
+type Account implements Node {
+  id: ID!
+  descr: String
+  access: [String]
+  profile: String
+  controller_did: CeramicAccount!
+}
+
+"""A connection to a list of items."""
+type AccountAccessConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [AccountAccessEdge]
+}
+
+"""Information about pagination in a connection."""
+type PageInfo {
+  """When paginating forwards, are there more items?"""
+  hasNextPage: Boolean!
+
+  """When paginating backwards, are there more items?"""
+  hasPreviousPage: Boolean!
+
+  """When paginating backwards, the cursor to continue."""
+  startCursor: String
+
+  """When paginating forwards, the cursor to continue."""
+  endCursor: String
+}
+
+"""An edge in a connection."""
+type AccountAccessEdge {
+  """The item at the end of the edge"""
+  node: AccountAccess
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+type AccountAccess implements Node {
+  id: ID!
+  user: CeramicAccount
+  descr: String
+  policy: String
+  controller_did: CeramicAccount!
+}
+
+"""A connection to a list of items."""
+type PolicyConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [PolicyEdge]
+}
+
+"""An edge in a connection."""
+type PolicyEdge {
+  """The item at the end of the edge"""
+  node: Policy
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+type Policy implements Node {
+  id: ID!
+  descr: String!
+  scope: String!
+  access: String!
+  effect: String
+  is_active: Boolean
+  controller_did: CeramicAccount!
+}
+
+"""A connection to a list of items."""
+type AccountConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [AccountEdge]
+}
+
+"""An edge in a connection."""
+type AccountEdge {
+  """The item at the end of the edge"""
+  node: Account
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+type Mutation {
+  createAccount(input: CreateAccountInput!): CreateAccountPayload
+  updateAccount(input: UpdateAccountInput!): UpdateAccountPayload
+  createAccountAccess(input: CreateAccountAccessInput!): CreateAccountAccessPayload
+  updateAccountAccess(input: UpdateAccountAccessInput!): UpdateAccountAccessPayload
+  createPolicy(input: CreatePolicyInput!): CreatePolicyPayload
+  updatePolicy(input: UpdatePolicyInput!): UpdatePolicyPayload
+}
+
+type CreateAccountPayload {
+  """Fetches an object given its ID"""
+  node(
+    """The ID of an object"""
+    id: ID!
+  ): Node
+  viewer: CeramicAccount
+  document: Account!
+  clientMutationId: String
+}
+
+input CreateAccountInput {
+  content: RequiredAccountInput!
+  clientMutationId: String
+}
+
+input RequiredAccountInput {
+  descr: String
+  access: [String]
+  profile: String
+}
+
+type UpdateAccountPayload {
+  """Fetches an object given its ID"""
+  node(
+    """The ID of an object"""
+    id: ID!
+  ): Node
+  viewer: CeramicAccount
+  document: Account!
+  clientMutationId: String
+}
+
+input UpdateAccountInput {
+  id: ID!
+  content: AccountInput!
+  options: UpdateOptionsInput
+  clientMutationId: String
+}
+
+input AccountInput {
+  descr: String
+  access: [String]
+  profile: String
+}
+
+input UpdateOptionsInput {
+  replace: Boolean
+  version: CeramicCommitID
+}
+
+"""A Ceramic Commit ID"""
+scalar CeramicCommitID
+
+type CreateAccountAccessPayload {
+  """Fetches an object given its ID"""
+  node(
+    """The ID of an object"""
+    id: ID!
+  ): Node
+  viewer: CeramicAccount
+  document: AccountAccess!
+  clientMutationId: String
+}
+
+input CreateAccountAccessInput {
+  content: RequiredAccountAccessInput!
+  clientMutationId: String
+}
+
+input RequiredAccountAccessInput {
+  user: DID
+  descr: String
+  policy: String
+}
+
+"""
+A field whose value conforms to the standard DID format as specified in did-core: https://www.w3.org/TR/did-core/.
+"""
+scalar DID @specifiedBy(url: "https://www.w3.org/TR/did-core/")
+
+type UpdateAccountAccessPayload {
+  """Fetches an object given its ID"""
+  node(
+    """The ID of an object"""
+    id: ID!
+  ): Node
+  viewer: CeramicAccount
+  document: AccountAccess!
+  clientMutationId: String
+}
+
+input UpdateAccountAccessInput {
+  id: ID!
+  content: AccountAccessInput!
+  options: UpdateOptionsInput
+  clientMutationId: String
+}
+
+input AccountAccessInput {
+  user: DID
+  descr: String
+  policy: String
+}
+
+type CreatePolicyPayload {
+  """Fetches an object given its ID"""
+  node(
+    """The ID of an object"""
+    id: ID!
+  ): Node
+  viewer: CeramicAccount
+  document: Policy!
+  clientMutationId: String
+}
+
+input CreatePolicyInput {
+  content: RequiredPolicyInput!
+  clientMutationId: String
+}
+
+input RequiredPolicyInput {
+  descr: String!
+  scope: String!
+  access: String!
+  effect: String
+  is_active: Boolean
+}
+
+type UpdatePolicyPayload {
+  """Fetches an object given its ID"""
+  node(
+    """The ID of an object"""
+    id: ID!
+  ): Node
+  viewer: CeramicAccount
+  document: Policy!
+  clientMutationId: String
+}
+
+input UpdatePolicyInput {
+  id: ID!
+  content: PolicyInput!
+  options: UpdateOptionsInput
+  clientMutationId: String
+}
+
+input PolicyInput {
+  descr: String
+  scope: String
+  access: String
+  effect: String
+  is_active: Boolean
+}

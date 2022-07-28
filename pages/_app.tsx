@@ -8,7 +8,7 @@ import { publicProvider } from "wagmi/providers/public";
 import { Provider } from "jotai";
 import { ApolloProvider } from "@apollo/client";
 
-import { client } from "../lib/graphql";
+import { getClients } from "../lib/graphql";
 
 const { chains, provider, webSocketProvider } = configureChains(
   [
@@ -43,11 +43,12 @@ const wagmiClient = createClient({
 });
 
 function MyApp({ Component, pageProps }: AppProps) {
+    const {apolloClient} = getClients()
   return (
     <WagmiConfig client={wagmiClient}>
       <RainbowKitProvider chains={chains}>
         <Provider>
-          <ApolloProvider client={client}>
+          <ApolloProvider client={apolloClient}>
             <Component {...pageProps} />
           </ApolloProvider>
         </Provider>
